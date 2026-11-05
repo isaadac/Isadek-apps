@@ -1,0 +1,10 @@
+# id	Name	URL (claude.ai artifact | exec:<command> | -)	Category	Icon text	Color	Description	Offline copy (yes/no)
+isadek-pdf-editor	Isadek PDF Editor	https://claude.ai/artifact/8eMm5pfxYPsaThgf1i2CEH	Office	PDF	#0b6e69	Edit, annotate, sign and organize PDF files	yes
+bible-jeopardy	Bible Jeopardy	https://claude.ai/artifact/UmxgyS3GPKcg6XnTXaCFAP	Game	?	#3b4cc0	Bible trivia quiz game	yes
+kjv-cross-reference	KJV Cross Reference Bible	https://claude.ai/artifact/9xs5oXMnkybEFvoa7HM3p1	Education	KJV	#5a2d82	King James Bible with cross references	yes
+nightstand-digital-clock	Nightstand Digital Clock	https://claude.ai/artifact/1bEo6LdCXCDRG6nD48fcfT	Utility	88	#1c2b4a	Nightstand digital clock	yes
+veritally	Veritally	https://claude.ai/artifact/XuAx52F7eAKHBBP2rfTgqT	Utility	V	#0f766e	Veritally	no
+good-night-greeting	Good Night Greeting Animation	https://claude.ai/artifact/GXy1AdgUaU2kuzi5gu8Urc	Graphics	GN	#312e81	Good night greeting animation	yes
+driftwave-radio	Driftwave Radio	https://claude.ai/artifact/TUso97RaeNPucA7m6u3ts5	AudioVideo	DR	#be185d	Internet radio player	yes
+threadline	Threadline	https://claude.ai/artifact/FfS5hqKoc8RRJ9FGNedsdp	Office	TL	#4338ca	AI productivity assistant	no
+jeopardy-scoreboard	Jeopardy Scoreboard	-	Game	SB	#b45309	Big-screen team scoreboard for Bible Jeopardy nights	yes
