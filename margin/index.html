@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Margin</title>
+<meta name="description" content="Margin is a beautiful offline e-book reader for EPUB and plain-text books, with highlights, notes, read-aloud and reading stats.">
+<meta name="theme-color" content="#eeeeea" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111315" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Margin">
+<meta name="application-name" content="Margin">
+<link rel="preload" href="fonts/literata-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/instrument-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/app.css">
+<script src="vendor/jszip.min.js"></script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-toc" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h7M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path class="fillable" d="M7 3.5h10v17l-5-4-5 4z"/></symbol>
+    <symbol id="i-listen" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3.5" y="13.5" width="4" height="7" rx="1.5"/><rect x="16.5" y="13.5" width="4" height="7" rx="1.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" stroke-width="3"/></symbol>
+    <symbol id="i-prev-s" viewBox="0 0 24 24"><path d="M6 6v12M18 6l-8 6 8 6z"/></symbol>
+    <symbol id="i-next-s" viewBox="0 0 24 24"><path d="M18 6v12M6 6l8 6-8 6z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M5 4.5h14v11l-4.5 4H5z"/><path d="M14.5 19.5v-4h4.5M8.5 9h7M8.5 12.5h4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M10 4h4M7 7l1 13h8l1-13"/></symbol>
+    <symbol id="i-define" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 19V11M10 19V6M15 19v-5M20 19V9"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-reflow" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h10M4 18h7M17 14l3 3-3 3M20 17h-6"/></symbol>
+    <symbol id="i-page" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/></symbol>
+    <symbol id="i-backup" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.6 9.1 4.75 4.75 0 0 0 7 18.5z"/><path d="M12 15.5v-6M9.5 12l2.5-2.5 2.5 2.5"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><path d="M6 12h.01M12 12h.01M18 12h.01" stroke-width="3"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4M8 8l4-4 4 4M6 12v6.5A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V12"/></symbol>
+    <symbol id="i-translate" viewBox="0 0 24 24"><path d="M4 6h9M8.5 4v2M6 6c.8 3.5 3 6 6 7.5M11 6c-.8 3.5-3 6-6 7.5M13 20l4-9 4 9M14.5 17h5"/></symbol>
+    <symbol id="i-auto" viewBox="0 0 24 24"><path d="M12 4v13M7 12l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M20.5 16l-5-5-8 8.5"/></symbol>
+    <symbol id="i-back15" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v3h3"/><text x="12" y="15.6" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" stroke="none" font-family="Figtree, sans-serif">15</text></symbol>
+    <symbol id="i-fwd30" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v3h-3"/><text x="12" y="15.6" text-anchor="middle" font-size="8.5" font-weight="700" fill="currentColor" stroke="none" font-family="Figtree, sans-serif">30</text></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+    <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3.5" y="14" width="4" height="6.5" rx="1.5"/><rect x="16.5" y="14" width="4" height="6.5" rx="1.5"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M15.5 4.5l4 4L9 19H5v-4z"/></symbol>
+  </defs>
+</svg>
+
+<div class="app" id="app">
+
+  <!-- ============ LIBRARY ============ -->
+  <section class="view library" id="library" hidden aria-label="Library">
+    <div class="lib-scroll" id="lib-scroll">
+      <div class="lib-inner">
+        <header class="lib-nav">
+          <div class="brand"><img src="icons/icon.svg" alt=""><span class="wordmark">Margin</span></div>
+          <label class="lib-search"><svg class="i"><use href="#i-search"/></svg><span class="sr">Search your library</span><input id="lib-q" type="search" placeholder="Search title or author" autocomplete="off"></label>
+          <div class="nav-actions">
+            <button class="btn ghost" id="b-backup"><svg class="i"><use href="#i-backup"/></svg><span>Backup</span></button>
+            <button class="btn ghost" id="b-install" hidden><svg class="i"><use href="#i-down"/></svg><span>Install</span></button>
+            <button class="btn primary" id="b-open"><svg class="i"><use href="#i-plus"/></svg>Add book</button>
+          </div>
+        </header>
+
+        <nav class="lib-tabs" id="lib-tabs" role="tablist" aria-label="Sections">
+          <button role="tab" data-view="shelf" aria-selected="true">Library</button>
+          <button role="tab" data-view="discover" aria-selected="false">Discover</button>
+          <button role="tab" data-view="highlights" aria-selected="false">Highlights</button>
+          <button role="tab" data-view="words" aria-selected="false">Words<span class="n" id="words-due"></span></button>
+          <button role="tab" data-view="insights" aria-selected="false">Insights</button>
+        </nav>
+
+        <div class="lib-view" id="v-shelf">
+          <section class="hero" id="hero" aria-label="Continue reading"></section>
+          <section class="stat-strip" id="stat-strip" aria-label="Reading at a glance"></section>
+          <section class="shelf" aria-labelledby="shelf-title">
+            <div class="shelf-head">
+              <h2 class="shelf-title" id="shelf-title">Library<span id="shelf-count"></span></h2>
+              <div class="shelf-tools"><button class="mini" id="b-select" type="button">Select</button>
+              <div class="seg sm" id="sort" role="group" aria-label="Sort books">
+                <button data-v="recent">Recent</button><button data-v="title">Title</button><button data-v="author">Author</button><button data-v="progress">Progress</button>
+              </div></div>
+            </div>
+            <div class="chips" id="shelf-chips" role="group" aria-label="Shelves"></div>
+            <div class="grid" id="grid"></div>
+            <p class="empty-filter" id="no-match" hidden></p>
+          </section>
+        </div>
+        <div class="lib-view" id="v-discover" hidden></div>
+        <div class="lib-view" id="v-highlights" hidden></div>
+        <div class="lib-view" id="v-words" hidden></div>
+        <div class="lib-view" id="v-insights" hidden></div>
+
+        <div class="selbar" id="selbar" hidden role="region" aria-label="Selected books">
+          <span id="sel-count">0 selected</span>
+          <button class="mini" id="sel-all" type="button">Select all</button>
+          <button class="btn danger-solid" id="sel-remove" type="button" disabled><svg class="i"><use href="#i-trash"/></svg>Remove</button>
+          <button class="btn" id="sel-done" type="button">Done</button>
+        </div>
+        <p class="lib-restore" id="lib-restore" hidden>The sample book was removed. <button class="mini" id="b-restore-sample" type="button">Restore the sample book</button></p>
+        <div class="np" id="np" hidden role="region" aria-label="Now playing">
+          <div class="np-art" id="np-art"></div>
+          <button class="np-info" id="np-open" type="button"><b id="np-title"></b><span id="np-chap"></span></button>
+          <button class="icon-btn" id="np-back" aria-label="Back 15 seconds"><svg class="i"><use href="#i-back15"/></svg></button>
+          <button class="icon-btn aud-play sm" id="np-play" aria-label="Pause"><svg class="i"><use href="#i-pause"/></svg></button>
+        </div>
+        <div class="install-hint" id="ios-hint" hidden><strong>Install on iPhone or iPad:</strong> tap the Share button in Safari, then <em>Add to Home Screen</em>.</div>
+        <footer class="lib-foot">
+          Books, highlights and reading positions are kept on this device and work offline. Margin opens DRM-free EPUB, MOBI, AZW3, FB2, PDF, Word (.docx), comics (CBZ, CBR, CB7) and plain-text books, and audiobooks (M4B, MP3, M4A, Opus, FLAC; select all of a book’s files together, or add its .zip). Drag a file onto the window, use <em>Open with</em> from your file manager, or share a book to Margin from another app. Press <kbd>?</kbd> while reading for keyboard shortcuts.
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ READER ============ -->
+  <section class="view reader" id="reader" hidden aria-label="Reader">
+    <div class="stage" id="stage">
+      <div id="page" tabindex="-1">
+        <div id="flow"></div>
+        <div class="frame" id="frame" aria-hidden="true"></div>
+      </div>
+      <div class="fixed" id="fixed" hidden><div class="fx-spread"></div></div>
+      <div class="aud" id="audiov" hidden>
+        <div class="aud-bg" id="aud-bg" aria-hidden="true"></div>
+        <div class="aud-inner">
+          <div class="aud-art" id="aud-art"></div>
+          <div class="aud-main">
+            <span class="eyebrow" id="aud-eyebrow">Audiobook</span>
+            <h2 class="aud-title" id="aud-title"></h2>
+            <p class="aud-author" id="aud-author"></p>
+            <button class="aud-chap" id="aud-chap" type="button" title="Chapters"></button>
+            <div class="aud-scrub">
+              <div class="track"><div class="fill" id="aud-fill"></div></div>
+              <input type="range" id="aud-pos" min="0" max="1000" value="0" aria-label="Position in chapter">
+            </div>
+            <div class="aud-times"><span id="aud-el">0:00</span><span id="aud-left">−0:00</span></div>
+            <div class="aud-ctrls">
+              <button class="icon-btn" id="aud-prevch" aria-label="Previous chapter" title="Previous chapter (Shift+←)"><svg class="i"><use href="#i-prev-s"/></svg></button>
+              <button class="icon-btn" id="aud-back" aria-label="Back 15 seconds" title="Back 15 seconds (←)"><svg class="i"><use href="#i-back15"/></svg></button>
+              <button class="icon-btn aud-play" id="aud-play" aria-label="Play"><svg class="i"><use href="#i-play"/></svg></button>
+              <button class="icon-btn" id="aud-fwd" aria-label="Forward 30 seconds" title="Forward 30 seconds (→)"><svg class="i"><use href="#i-fwd30"/></svg></button>
+              <button class="icon-btn" id="aud-nextch" aria-label="Next chapter" title="Next chapter (Shift+→)"><svg class="i"><use href="#i-next-s"/></svg></button>
+            </div>
+            <div class="aud-extra">
+              <button class="chip" id="aud-rate" aria-haspopup="menu" title="Speed (+ / −)">1.0×</button>
+              <button class="chip" id="aud-sleep" aria-haspopup="menu"><svg class="i"><use href="#i-moon"/></svg><span id="aud-sleep-l">Sleep timer</span></button>
+              <button class="chip" id="aud-bm"><svg class="i"><use href="#i-bookmark"/></svg><span>Bookmark</span></button>
+            </div>
+            <p class="aud-book" id="aud-book"></p>
+          </div>
+        </div>
+      </div>
+      <button class="turn prev" id="t-prev" aria-label="Previous page"><svg class="i"><use href="#i-back"/></svg></button>
+      <button class="turn next" id="t-next" aria-label="Next page"><svg class="i"><use href="#i-next"/></svg></button>
+      <div class="status" id="status" hidden><div><div class="spin"></div><span id="status-t">Opening…</span></div></div>
+    </div>
+
+    <header class="rbar top" id="topbar">
+      <button class="back" id="b-lib" aria-label="Back to library"><svg class="i"><use href="#i-back"/></svg><span>Library</span></button>
+      <button class="icon-btn" id="b-toc" aria-label="Contents and notes" title="Contents (T)"><svg class="i"><use href="#i-toc"/></svg></button>
+      <div class="book-head"><div class="t" id="h-title"></div><div class="a" id="h-author"></div></div>
+      <button class="icon-btn" id="b-pdfmode" hidden aria-label="Switch to text view" title="Text view: reflow this PDF"><svg class="i"><use href="#i-reflow"/></svg></button>
+      <button class="icon-btn" id="b-listen" aria-label="Read aloud" aria-pressed="false" title="Read aloud (L)"><svg class="i"><use href="#i-listen"/></svg></button>
+      <button class="icon-btn" id="b-search" aria-label="Search in book" title="Search (F)"><svg class="i"><use href="#i-search"/></svg></button>
+      <button class="icon-btn" id="b-mark" aria-label="Bookmark this page" aria-pressed="false" title="Bookmark (B)"><svg class="i"><use href="#i-bookmark"/></svg></button>
+      <button class="icon-btn aa" id="b-set" aria-label="Reading settings" aria-expanded="false" title="Text and layout">Aa</button>
+    </header>
+
+    <footer class="rbar bottom" id="botbar">
+      <div class="foot-row"><span class="chap" id="f-chap"></span><span class="where" id="f-where"></span></div>
+      <div class="scrub" id="scrub-wrap">
+        <div class="track"><div class="fill" id="scrub-fill"></div></div>
+        <div id="ticks"></div>
+        <input type="range" id="scrub" min="0" max="1000" value="0" aria-label="Position in book">
+        <div class="scrub-tip" id="scrub-tip" hidden></div>
+      </div>
+    </footer>
+
+    <div class="tts auto" id="auto" hidden role="group" aria-label="Auto-advance">
+      <span class="lbl" id="auto-lbl">Auto-advance</span>
+      <button class="icon-btn" id="auto-slower" aria-label="Slower">−</button>
+      <span class="rate" id="auto-rate">240 wpm</span>
+      <button class="icon-btn" id="auto-faster" aria-label="Faster">+</button>
+      <button class="icon-btn play" id="auto-play" aria-label="Pause"><svg class="i"><use href="#i-pause"/></svg></button>
+      <button class="icon-btn" id="auto-close" aria-label="Stop auto-advance"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="tts" id="tts" hidden role="group" aria-label="Read aloud">
+      <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lbl" id="tts-lbl">Reading aloud</span>
+      <button class="icon-btn" id="tts-prev" aria-label="Previous sentence"><svg class="i"><use href="#i-prev-s"/></svg></button>
+      <button class="icon-btn play" id="tts-play" aria-label="Pause"><svg class="i"><use href="#i-pause"/></svg></button>
+      <button class="icon-btn" id="tts-next" aria-label="Next sentence"><svg class="i"><use href="#i-next-s"/></svg></button>
+      <button class="rate" id="tts-rate" aria-label="Reading speed">1.0×</button>
+      <button class="icon-btn" id="tts-close" aria-label="Stop reading aloud"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+  </section>
+
+  <!-- ============ OVERLAYS ============ -->
+  <input type="file" id="file" accept=".epub,.pdf,.mobi,.azw,.azw3,.prc,.fb2,.fbz,.docx,.cbz,.cbr,.cb7,.cbt,.txt,.md,.m4b,.m4a,.mp3,.aac,.ogg,.oga,.opus,.flac,.wav,.zip,audio/*,application/epub+zip,application/pdf,text/plain" multiple hidden>
+  <div class="scrim" id="scrim"></div>
+
+  <aside class="drawer" id="drawer" aria-label="Book navigation" aria-hidden="true" inert>
+    <div class="dr-head">
+      <div class="book" id="dr-cover"></div>
+      <div class="dr-meta"><div class="t" id="dr-title"></div><div class="a" id="dr-author"></div>
+        <div class="p"><span class="bar-track"><i id="dr-bar"></i></span><span id="dr-pct"></span></div></div>
+      <button class="icon-btn" id="b-bookmenu" aria-label="Book options" aria-haspopup="menu" title="Book options"><svg class="i"><use href="#i-more"/></svg></button>
+      <button class="icon-btn" id="b-close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" data-tab="toc" aria-selected="true">Contents</button>
+      <button class="tab" role="tab" data-tab="notes" aria-selected="false">Notes<span class="n" id="notes-n"></span></button>
+      <button class="tab" role="tab" data-tab="find" aria-selected="false">Search</button>
+    </div>
+    <div class="panel toc" id="p-toc" role="tabpanel"><ul class="list" id="toc-list"></ul></div>
+    <div class="panel" id="p-notes" role="tabpanel" hidden></div>
+    <div class="panel" id="p-find" role="tabpanel" hidden>
+      <form class="search-box" id="find-form"><svg class="i"><use href="#i-search"/></svg><input id="find-q" type="search" placeholder="Find a word or phrase" autocomplete="off" aria-label="Search text"></form>
+      <div class="count" id="find-count"></div>
+      <ul class="list" id="find-list"></ul>
+    </div>
+  </aside>
+
+  <div class="pop" id="settings" hidden role="dialog" aria-label="Reading settings">
+    <p class="dlg-note fixed-only">This book is laid out as fixed pages, so text settings don’t apply. For a PDF, switch to text view to change the type.</p>
+    <div class="set-row flow-only">
+      <span class="set-label">Text size <output id="sz-out">19 px</output></span>
+      <div class="stepper"><button class="s" id="sz-dn" aria-label="Smaller text">A</button><input type="range" class="slim" id="sz" min="13" max="32" step="1" aria-label="Text size"><button class="l" id="sz-up" aria-label="Larger text">A</button></div>
+    </div>
+    <div class="set-row flow-only">
+      <span class="set-label">Typeface</span>
+      <div class="fonts" data-key="font">
+        <button data-v="literata"><b style="font-family:'Literata',serif">Ag</b>Literata</button>
+        <button data-v="newsreader"><b style="font-family:'Newsreader',serif">Ag</b>Newsreader</button>
+        <button data-v="atkinson"><b style="font-family:'Atkinson Hyperlegible',sans-serif">Ag</b>Legible</button>
+        <button data-v="figtree"><b style="font-family:'Figtree',sans-serif">Ag</b>Figtree</button>
+        <button data-v="dyslexic"><b style="font-family:'OpenDyslexic',sans-serif;font-size:18px">Ag</b>Dyslexic</button>
+      </div>
+    </div>
+    <div class="set-row">
+      <span class="set-label">Theme</span>
+      <div class="swatches" data-key="theme">
+        <button class="sw sw-auto" data-v="auto"><i>Aa</i>Auto</button>
+        <button class="sw sw-paper" data-v="paper"><i>Aa</i>Paper</button>
+        <button class="sw sw-sepia" data-v="sepia"><i>Aa</i>Sepia</button>
+        <button class="sw sw-dusk" data-v="dusk"><i>Aa</i>Dusk</button>
+        <button class="sw sw-night" data-v="night"><i>Aa</i>Night</button>
+      </div>
+    </div>
+    <div class="set-row flow-only"><span class="set-label">Line spacing</span>
+      <div class="seg" data-key="lh"><button data-v="1.4">Tight</button><button data-v="1.6">Normal</button><button data-v="1.85">Loose</button></div></div>
+    <div class="set-row flow-only"><span class="set-label">Letter spacing <output id="ls-out">Normal</output></span>
+      <input type="range" class="slim" id="ls" min="0" max="12" step="1" aria-label="Letter spacing"></div>
+    <div class="set-row flow-only"><span class="set-label">Word spacing <output id="ws-out">Normal</output></span>
+      <input type="range" class="slim" id="ws" min="0" max="40" step="2" aria-label="Word spacing"></div>
+    <div class="set-row flow-only"><span class="set-label">Margins</span>
+      <div class="seg" data-key="margin"><button data-v="narrow">Narrow</button><button data-v="normal">Normal</button><button data-v="wide">Wide</button></div></div>
+    <div class="set-row flow-only"><span class="set-label">Layout</span>
+      <div class="seg" data-key="layout"><button data-v="paged">Pages</button><button data-v="scroll">Scroll</button></div></div>
+    <div class="set-row" id="row-spread"><span class="set-label">Pages on screen</span>
+      <div class="seg" data-key="spread"><button data-v="auto">Auto</button><button data-v="single">One</button><button data-v="double">Two</button></div></div>
+    <div class="set-row flow-only"><span class="set-label">Paragraphs</span>
+      <div class="seg" data-key="para"><button data-v="indent">Indented</button><button data-v="spaced">Spaced</button></div></div>
+    <div class="set-row"><span class="set-label">Night-light warmth <output id="warm-out">Off</output></span>
+      <input type="range" class="slim" id="warmth" min="0" max="60" step="1" aria-label="Night-light warmth"></div>
+    <div class="set-row flow-only" id="row-voice" hidden><span class="set-label">Read-aloud voice</span>
+      <select class="sel" id="voice" aria-label="Read-aloud voice"></select></div>
+    <div class="set-row flow-only"><span class="set-label">Focus aids</span>
+      <div class="toggles tight">
+        <label class="switch">Reading ruler<input type="checkbox" id="opt-ruler"></label>
+        <label class="switch">Bold word starts (bionic)<input type="checkbox" id="opt-bionic"></label>
+        <label class="switch">Dim other paragraphs<input type="checkbox" id="opt-focus"></label>
+      </div>
+      <button class="btn" id="b-auto" type="button"><svg class="i"><use href="#i-auto"/></svg>Start auto-advance</button>
+    </div>
+    <div class="toggles">
+      <label class="switch flow-only">Justify and hyphenate<input type="checkbox" id="opt-justify"></label>
+      <label class="switch flow-only">Drop caps at chapter openings<input type="checkbox" id="opt-dropcap"></label>
+      <label class="switch anim-row">Page-turn animation<input type="checkbox" id="opt-anim"></label>
+      <label class="switch flow-only">Running heads and page numbers<input type="checkbox" id="opt-furniture"></label>
+    </div>
+  </div>
+
+  <div class="seltool" id="seltool" hidden role="toolbar" aria-label="Selection"></div>
+  <div class="fnpop" id="fnpop" hidden role="dialog" aria-label="Note"></div>
+
+  <dialog id="note-dlg" aria-label="Note">
+    <form class="dlg" method="dialog" id="note-form">
+      <div class="dlg-head"><h2>Note</h2><button class="icon-btn" value="cancel" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+      <blockquote class="quote" id="note-quote"></blockquote>
+      <label class="sr" for="note-text">Your note</label>
+      <textarea class="note" id="note-text" placeholder="Write a thought, a question, a connection…"></textarea>
+      <div class="dlg-acts">
+        <button class="btn danger left" value="delete" id="note-del">Delete highlight</button>
+        <button class="btn" value="cancel">Cancel</button>
+        <button class="btn primary" value="save">Save note</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="stats-dlg" aria-label="Reading stats">
+    <div class="dlg" id="stats-body"></div>
+  </dialog>
+
+  <dialog id="keys-dlg" aria-label="Keyboard shortcuts">
+    <form class="dlg" method="dialog">
+      <div class="dlg-head"><h2>Shortcuts</h2><button class="icon-btn" value="close" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+      <dl class="keys">
+        <dt><kbd>←</kbd><kbd>→</kbd></dt><dd>Turn the page (also Space, Page Up, Page Down)</dd>
+        <dt><kbd>T</kbd></dt><dd>Contents</dd>
+        <dt><kbd>N</kbd></dt><dd>Highlights, notes and bookmarks</dd>
+        <dt><kbd>F</kbd><kbd>/</kbd></dt><dd>Search this book</dd>
+        <dt><kbd>B</kbd></dt><dd>Bookmark this page</dd>
+        <dt><kbd>L</kbd></dt><dd>Read aloud, pause, resume</dd>
+        <dt><kbd>+</kbd><kbd>−</kbd></dt><dd>Larger or smaller text</dd>
+        <dt><kbd>D</kbd></dt><dd>Next theme</dd>
+        <dt><kbd>H</kbd></dt><dd>Show or hide the toolbars</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Close a panel, or return to the library</dd>
+      </dl>
+    </form>
+  </dialog>
+
+  <dialog id="backup-dlg" aria-label="Backup and restore">
+    <div class="dlg">
+      <div class="dlg-head"><h2>Backup &amp; restore</h2><button class="icon-btn" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+      <p class="dlg-p">Margin keeps everything on this device. A backup is one <b>.margin</b> file with your books, reading positions, highlights, notes, bookmarks, words, goals and stats. Restore it here or on another device; nothing you already have is overwritten.</p>
+      <label class="switch">Include book files<input type="checkbox" id="bk-books" checked></label>
+      <p class="dlg-note" id="bk-size"></p>
+      <div class="dlg-acts"><button class="btn left" id="bk-restore">Restore from file…</button><button class="btn primary" id="bk-make">Download backup</button></div>
+      <p class="dlg-note" id="bk-status" role="status"></p>
+      <input type="file" id="bk-file" accept=".margin,application/zip" hidden>
+    </div>
+  </dialog>
+
+  <dialog id="edit-dlg" aria-label="Edit book details">
+    <form class="dlg" method="dialog" id="edit-form">
+      <div class="dlg-head"><h2>Book details</h2><button class="icon-btn" value="cancel" aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+      <div class="edit-grid">
+        <div class="edit-cover"><div class="book" id="ed-cover"></div>
+          <div class="edit-cover-acts"><button type="button" class="mini" id="ed-cover-pick">Change cover</button><button type="button" class="mini" id="ed-cover-reset">Reset</button></div>
+          <input type="file" id="ed-cover-file" accept="image/*" hidden></div>
+        <div class="edit-fields">
+          <label class="fld"><span>Title</span><input id="ed-title" required></label>
+          <label class="fld"><span>Author</span><input id="ed-author"></label>
+          <label class="fld"><span>Tags</span><input id="ed-tags" placeholder="classic, book club, summer"></label>
+          <div class="fld"><span>Shelves</span><div class="chips" id="ed-shelves"></div></div>
+        </div>
+      </div>
+      <div class="dlg-acts"><button class="btn danger left" value="remove" formnovalidate>Remove from library…</button><button class="btn" value="cancel">Cancel</button><button class="btn primary" value="save">Save</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="quote-dlg" aria-label="Share quote">
+    <div class="dlg">
+      <div class="dlg-head"><h2>Quote card</h2><button class="icon-btn" data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+      <canvas id="quote-canvas" width="1080" height="1350" class="quote-canvas"></canvas>
+      <div class="dlg-acts"><div class="seg sm left" id="quote-style"><button data-v="cover">Book colour</button><button data-v="paper">Paper</button><button data-v="ink">Ink</button></div><button class="btn" id="quote-save">Save image</button><button class="btn primary" id="quote-share">Share</button></div>
+    </div>
+  </dialog>
+
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Image viewer"><img id="lb-img" alt=""><button class="icon-btn lb-close" id="lb-close" aria-label="Close image"><svg class="i"><use href="#i-x"/></svg></button><span class="lb-hint">Pinch, scroll or double-click to zoom</span></div>
+  <div class="ruler" id="ruler" hidden aria-hidden="true"></div>
+  <div class="menu" id="menu" hidden role="menu"></div>
+
+  <div class="toast" id="toast" hidden role="status"></div>
+  <div class="drop" id="drop" hidden>Drop to add to your library</div>
+  <div class="warmth" id="warm"></div>
+</div>
+</body>
+</html>
